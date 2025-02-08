@@ -1,5 +1,5 @@
 streamlit
 transformers
-tenserflow
+tensorflow
 nltk
 tf-keras

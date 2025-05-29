@@ -1,20 +1,19 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai  # ✅ Fixed import
 import os
 
 # Load API Key from environment variables (or manually set it here)
-API_KEY = os.getenv("GEMINI_API_KEY", "YOUR_API_KEY")  # Replace "YOUR_API_KEY" if needed
+API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyBUOp0uESb29W1JqMJrDPNV42hRnha0Mu")  # Replace "YOUR_API_KEY" if needed
 
-# Initialize the GenAI client
-client = genai.Client(api_key=API_KEY)
+# Configure the GenAI client
+genai.configure(api_key=API_KEY)
 
-# Function to generate AI responses using Gemini
+# Initialize the GenAI model
+client = genai.GenerativeModel(model_name="gemini-2.0-flash")  # ✅ Replaces genai.Client (which doesn't exist)
+
 def healthcare_ai_response(user_input):
     try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=user_input
-        )
+        response = client.generate_content(user_input)  # ✅ Updated call for GenerativeModel
         return response.text
     except Exception as e:
         return f"Error generating response: {str(e)}"
